@@ -1,0 +1,39 @@
+﻿<Window x:Class="MetroProgressBarAnimationTest.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view="clr-namespace:MetroProgressBarAnimationTest.View"
+        xmlns:viewModel="clr-namespace:MetroProgressBarAnimationTest.ViewModel"
+        Title="Animation Warning 6 stop/remove fail" Height="350" Width="525">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    
+    <TextBlock Grid.Row="0" TextWrapping="WrapWithOverflow">
+      Add a new tab, watch the animation running,
+      close the tab while the animation is running,
+      two warnings will be printed to the output log:
+      Animation Warning: 6 ... Action='Stop'.
+      Animation Warning: 6 ... Action='Remove'.
+    </TextBlock>
+
+    <Button Grid.Row="1"
+            HorizontalAlignment="Left"
+            Content="Add new Tab"
+            Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=view:MainWindow}, Path=ViewModel.AddTabCommand, Mode=OneWay}" />
+
+    <TabControl Grid.Row="2"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=view:MainWindow}, Path=ViewModel.Tabs, Mode=OneWay}"
+                SelectedItem="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=view:MainWindow}, Path=ViewModel.SelectedTab, Mode=TwoWay}">
+      <TabControl.Resources>
+        <Style TargetType="{x:Type TabItem}" BasedOn="{StaticResource MetroTabItem}">
+          <Setter Property="Content" Value="{Binding Path=(viewModel:MainTabViewModel.View), Mode=OneWay}" />
+          <Setter Property="Header" Value="{Binding Mode=OneWay}" />
+        </Style>
+      </TabControl.Resources>
+    </TabControl>
+  </Grid>
+</Window>

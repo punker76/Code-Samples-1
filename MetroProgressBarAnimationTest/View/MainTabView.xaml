@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                    xmlns:view="clr-namespace:MetroProgressBarAnimationTest.View">
+  <ControlTemplate x:Key="MainTabViewTemplate" TargetType="view:MainTabView">
+    <Grid>
+      <Button HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Content="Close Tab"
+              Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.CloseTabCommand, Mode=OneWay}" />
+
+      <Grid HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0"
+                HorizontalAlignment="Center"
+                Content="Toggle Animation"
+                Command="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.ToggleCommand, Mode=OneWay}" />
+
+        <!-- HINT: To not bind the IsIndeterminate property and set it to "true" fixed will also prevent the warning message. -->
+        <controls:MetroProgressBar Grid.Row="1"
+                                   Width="200"
+                                   Height="6"
+                                   IsIndeterminate="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=ViewModel.IsAnimationActive}" />
+      </Grid>
+    </Grid>
+  </ControlTemplate>
+
+  <Style TargetType="{x:Type view:MainTabView}">
+    <Setter Property="Template" Value="{StaticResource MainTabViewTemplate}" />
+  </Style>
+</ResourceDictionary>
